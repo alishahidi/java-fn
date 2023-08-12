@@ -42,13 +42,7 @@ public class _Stream {
 
 
         Comparator<Integer> getMin = (integer, t1) -> {
-            if (integer > t1){
-                return 1;
-            } else if (integer < t1) {
-                return -1;
-            }else {
-                return 0;
-            }
+            return integer - t1;
         };
         List<Integer> numbers = new ArrayList<>(List.of(
                 1, 2, 3, 6, 8, 9
