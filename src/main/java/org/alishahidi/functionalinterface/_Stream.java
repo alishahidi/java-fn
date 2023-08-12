@@ -1,8 +1,6 @@
 package org.alishahidi.functionalinterface;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class _Stream {
@@ -23,5 +21,39 @@ public class _Stream {
             System.out.println("Map() was called.");
             return element.toUpperCase();
         }).forEach(System.out::println);
+
+        System.out.println("-----------Order of Execution-----------");
+        long size = list.stream().skip(2).filter(s -> {
+            System.out.println("Filter(1) was called.");
+            return s.contains("a");
+        }).count();
+
+        System.out.println(size);
+
+        System.out.println(
+                list.stream()
+                        .allMatch(s -> s.contains("2"))
+        );
+
+        Optional<String> optionalReducer = list.stream()
+                        .reduce((s, s2) -> s + ", " + s2);
+
+        System.out.println(optionalReducer.get());
+
+
+        Comparator<Integer> getMin = (integer, t1) -> {
+            if (integer > t1){
+                return 1;
+            } else if (integer < t1) {
+                return -1;
+            }else {
+                return 0;
+            }
+        };
+        List<Integer> numbers = new ArrayList<>(List.of(
+                1, 2, 3, 6, 8, 9
+        ));
+        Optional<Integer> minNum = numbers.stream().min(getMin);
+        minNum.ifPresent(System.out::println);
     }
 }
