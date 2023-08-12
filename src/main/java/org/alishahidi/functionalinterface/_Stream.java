@@ -18,7 +18,7 @@ public class _Stream {
         List<String> list = Arrays.asList("abc1", "abc2", "abc3");
         list.stream().filter(element -> {
             System.out.println("Filter() was called.");
-            return element.contains("2");
+            return element.contains("a");
         }).map(element -> {
             System.out.println("Map() was called.");
             return element.toUpperCase();
