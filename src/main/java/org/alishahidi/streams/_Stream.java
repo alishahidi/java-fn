@@ -1,45 +1,53 @@
-package org.alishahidi.streams;
+package org.alishahidi.functionalinterface;
 
-import org.alishahidi.imperactive.Main;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class _Stream {
-
     public static void main(String[] args) {
-        List<Person> people = List.of(
-                new Person("Ali", Gender.MALE),
-                new Person("Melika", Gender.FEMALE),
-                new Person("Sara", Gender.FEMALE),
-                new Person("Mohammad", Gender.MALE)
+        Stream<Integer> stream = Stream.of(
+                1,
+                2,
+                3
         );
 
-        Double a = 0.1 + 0.2;
-        float a1 = 0.1f + 0.2f;
+        stream.forEach(System.out::println);
 
-        System.out.println(a);
-        System.out.println(a1);
+        List<String> list = Arrays.asList("abc1", "abc2", "abc3");
+        list.stream().filter(element -> {
+            System.out.println("Filter() was called.");
+            return element.contains("a");
+        }).map(element -> {
+            System.out.println("Map() was called.");
+            return element.toUpperCase();
+        }).forEach(System.out::println);
 
-        people.stream()
-                .map(person -> person.gender)
-                .collect(Collectors.toSet())
-                .forEach(System.out::println);
-    }
+        System.out.println("-----------Order of Execution-----------");
+        long size = list.stream().skip(2).filter(s -> {
+            System.out.println("Filter(1) was called.");
+            return s.contains("a");
+        }).count();
+
+        System.out.println(size);
+
+        System.out.println(
+                list.stream()
+                        .allMatch(s -> s.contains("2"))
+        );
+
+        Optional<String> optionalReducer = list.stream()
+                .reduce((s, s2) -> s + ", " + s2);
+
+        System.out.println(optionalReducer.get());
 
 
-    record Person(String name, Gender gender) {
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", gender=" + gender +
-                    '}';
-        }
-    }
-
-    enum Gender {
-        MALE, FEMALE
+        Comparator<Integer> getMin = (integer, t1) -> {
+            return integer - t1;
+        };
+        List<Integer> numbers = new ArrayList<>(List.of(
+                1, 2, 3, 6, 8, 9
+        ));
+        Optional<Integer> minNum = numbers.stream().min(getMin);
+        minNum.ifPresent(System.out::println);
     }
 }
